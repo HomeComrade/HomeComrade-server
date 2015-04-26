@@ -76,14 +76,18 @@ class StopTimes:
 		
 		#do the bus stations
 		hourTimes = self.busStop[dayKey][self.nowHour]
-		Logger(Logger.DEBUG, str(hourTimes))
+		
 		for busNumber, minutes in hourTimes.items():
 			for minute in minutes:
 				#skip anything in the past
 				if minute <= self.nowMinute:
 					continue;
 				
-				combinedMinutes = minute + (60 * hoursIteration)
+				if self.hasUnsetTime(self.firstBusNumber) and self.hasUnsetTime(self.secondBusNumber):
+					combinedMinutes = minute
+				else:
+					combinedMinutes = minute + (60 * hoursIteration)
+				
 				combinedFirstBusTimeMinutes = self.firstBusTime + (60 * self.firstBusHoursIteration)
 				combinedSecondBusTimeMinutes = self.secondBusTime + (60 * self.secondBusHoursIteration)
 				
@@ -94,7 +98,7 @@ class StopTimes:
 					self.firstBusNumber = busNumber
 					self.firstBusTime = minute
 					self.firstBusHoursIteration = hoursIteration
-				elif combinedMinutes < combinedSecondBusTimeMinutes:
+				elif (combinedMinutes < combinedSecondBusTimeMinutes) or (self.hasUnsetTime(self.secondBusNumber) and minute < combinedSecondBusTimeMinutes):
 					self.secondBusNumber = busNumber
 					self.secondBusTime = minute
 					self.secondBusHoursIteration = hoursIteration
