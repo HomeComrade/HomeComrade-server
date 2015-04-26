@@ -21,7 +21,9 @@ from player import Player, CommandNotSupported, InvalidPlayer
 from logger import Logger
 from irremote import IRRemote
 from shows import Shows
-from bluetoothserver import BluetoothServer
+
+if config.IS_BLUETOOTH_SERVER:
+	from bluetoothserver import BluetoothServer
 
 class HomeComradeServer(BaseHTTPRequestHandler):
 	def do_GET(self):
