@@ -1,0 +1,119 @@
+DEBUG = True
+#0 = VERBOSE 
+#1 = DEBUG
+#2 = INFO
+#3 = ERROR
+DEBUG_LEVEL = 1#raise to show less messages
+
+SERVER_PORT = 8053
+
+MEDIA_PLAYER = 'totem'#valid options are 'totem' and 'omxplayer'
+
+#CONNECTION_TYPE = 'ssh'
+CONNECTION_TYPE = 'localhost'
+CONNECTION_SERVER = 'example.com'#ignored if connection type is localhost
+CONNECTION_USERNAME = 'username'#ignored if connection type is localhost
+CONNECTION_PASSWORD = 'password'#ignored if connection type is localhost
+
+USES_IR_REMOTE = False
+IR_REMOTE_NAME = 'samsung'#only used if USES_IR_REMOTE is True. Must be the name of the remote in your `irsend` config
+
+IS_BLUETOOTH_SERVER = False#If this instance is the master BT server for the BTHome Arduino setup
+
+#a list of folders that have shows in them
+#shows should be organized in the following folder structure:
+#Shows/
+#	Show Name -> ex "The Simpsons"
+#		Season Number -> ex Season 01
+#			Episode list...
+showDirectories = ['/media/1000gb/Shows', '/media/500gb/Shows']
+
+MAX_RANDOM_PLAYLIST_SIZE = 10
+
+SQLITE_DATABASE_NAME = 'mediacomrade.sqlite'
+
+VALID_MEDIA_FILE_EXTENSIONS = ['.avi', '.mkv', '.mpg', '.mp4', '.m4v', '.mpeg', '.wmv', '.ogm']
+VALID_PLAYABLE_FILE_EXTENSIONS = VALID_MEDIA_FILE_EXTENSIONS
+VALID_PLAYABLE_FILE_EXTENSIONS.append('.pls')
+VALID_PLAYABLE_FILE_EXTENSIONS.append('.mp3')
+VALID_PLAYABLE_FILE_EXTENSIONS.append('.wav')
+
+BLANK_SHOW_CATEGORIES = {
+	'Cartoons' : [],
+	'Sitcoms' : [],
+	'Drama' : [],
+	'Documentary' : [],
+	'Anime' : [],
+	'Other' : [],
+}
+
+knownShowCategories = {
+	'12 Oz. Mouse' : 'Cartoons',
+	'American Dad!' : 'Cartoons',
+	'Aqua Teen Hunger Force' : 'Cartoons',
+	'Archer' : 'Cartoons',
+	'Family Guy' : 'Cartoons',
+	'Frisky Dingo' : 'Cartoons',
+	'Futurama' : 'Cartoons',
+	'Harvey Birdman, Attorney at Law' : 'Cartoons',
+	'Home Movies' : 'Cartoons',
+	'King of the Hill' : 'Cartoons',
+	'Metalocalypse' : 'Cartoons',
+	'Moral Orel' : 'Cartoons',
+	'Robot Chicken' : 'Cartoons',
+	'Sealab 2021' : 'Cartoons',
+	'South Park' : 'Cartoons',
+	'Superjail!' : 'Cartoons',
+	'The Boondocks' : 'Cartoons',
+	'The Brak Show' : 'Cartoons',
+	'The Cleveland Show' : 'Cartoons',
+	'The Simpsons' : 'Cartoons',
+	'The Venture Bros.' : 'Cartoons',
+	'Ugly Americans' : 'Cartoons',
+	'Tom Goes To The Mayor' : 'Cartoons',
+	'Brickleberry' : 'Cartoons',
+	'Bob\'s Burgers' : 'Cartoons',
+	
+	'Arrested Development' : 'Sitcoms',
+	'The Office' : 'Sitcoms',
+	'Check It Out! with Dr. Steve Brule' : 'Sitcoms',
+	'It\'s Always Sunny In Philadelphia' : 'Sitcoms',
+	'Modern Family' : 'Sitcoms',
+	'Parks and Recreation' : 'Sitcoms',
+	'Workaholics' : 'Sitcoms',
+	'Louie' : 'Sitcoms',
+	'The IT Crowd' : 'Sitcoms',
+	
+	'Flight of the Conchords' : 'Sitcoms',
+	'Freaks and Geeks' : 'Sitcoms',
+	'How I Met Your Mother' : 'Sitcoms',
+	'The Big Bang Theory' : 'Sitcoms',
+	'Tim & Eric Awesome Show, Great Job!' : 'Sitcoms',
+	'Louis C.K.' : 'Sitcoms',
+	
+	'The Blue Planet' : 'Documentary',
+	'Planet Earth' : 'Documentary',
+	'Ross Kemp On Gangs' : 'Documentary',
+	'Tribe' : 'Documentary',
+	'Survivorman' : 'Documentary',
+	'How the Earth Was Made' : 'Documentary',
+	
+	'Cowboy Bebop' : 'Anime',
+	'Ghost in the Shell' : 'Anime',
+	'Samurai 7' : 'Anime',
+	'Darker Than Black' : 'Anime',
+	'Samurai Champloo' : 'Anime',
+	
+	'Dexter' : 'Drama',
+	'Firefly' : 'Drama',
+	'Game Of Thrones' : 'Drama',
+	'Mad Men' : 'Drama',
+	'Misfits' : 'Drama',
+	'The Twilight Zone' : 'Drama',
+	'The Walking Dead' : 'Drama',
+	'Breaking Bad' : 'Drama',
+	'Homeland' : 'Drama',
+	'Vikings' : 'Drama',
+}
+
+showCategoriesInited = False
