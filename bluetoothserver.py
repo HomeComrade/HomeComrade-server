@@ -11,6 +11,7 @@ time.tzset()
 class BluetoothServer:
 	HARDWARE_BUTTON_PRESS = 'hardware-button-press'
 	HARDWARE_BUTTON_PRESS_AND_HOLD = 'hardware-button-press-and-hold'
+	LIGHTS_RGB = 'lights-rgb'
 	
 	QUEUE = queue.Queue()
 	
@@ -166,6 +167,9 @@ def mainLoop():
 		elif command == BluetoothServer.HARDWARE_BUTTON_PRESS_AND_HOLD:
 			writeString = '#2#'
 			Logger(Logger.DEBUG, 'Hardware button press and hold - '+writeString)
+		elif command and command.startswith(BluetoothServer.LIGHTS_RGB):
+			writeString = ']'+command.replace(BluetoothServer.LIGHTS_RGB, '')+']'
+			Logger(Logger.DEBUG, 'Lights RGB set - '+writeString)
 		
 		if (currentTime - busMessageTimer) > sendBusMessageSeconds:
 			busMessageTimer = currentTime

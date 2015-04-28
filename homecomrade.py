@@ -20,6 +20,7 @@ from database import Database, DatabaseError, SyncDatabase
 from player import Player, CommandNotSupported, InvalidPlayer
 from logger import Logger
 from irremote import IRRemote
+from lights import Lights
 from shows import Shows
 
 if config.IS_BLUETOOTH_SERVER:
@@ -102,8 +103,10 @@ class RequestHandler:
 	FOREIGN_UPDATE_PLAY_TIME = 'foreign-update-play-time'
 	PLAY_AT = 'play-at'
 	QUIT = 'quit'
+	
 	HARDWARE_BUTTON_PRESS = 'hardware-button-press'
 	HARDWARE_BUTTON_PRESS_AND_HOLD = 'hardware-button-press-and-hold'
+	LIGHTS_RGB = 'lights-rgb'
 	
 	TV_VOLUME_UP = 'volume-up-tv'
 	TV_VOLUME_DOWN = 'volume-down-tv'
@@ -254,14 +257,26 @@ class RequestHandler:
 		#BT commads, handled seperatly
 		elif self.command == RequestHandler.HARDWARE_BUTTON_PRESS:
 			if not config.IS_BLUETOOTH_SERVER:
-				raise CommandNotSupported('Can not send Bluetooth commands on a non Bluetooth server')
+				raise CommandNotSupported('Cannot send Bluetooth commands on a non Bluetooth server')
 			
 			BluetoothServer.QUEUE.put(BluetoothServer.HARDWARE_BUTTON_PRESS)
 		elif self.command == RequestHandler.HARDWARE_BUTTON_PRESS_AND_HOLD:
 			if not config.IS_BLUETOOTH_SERVER:
-				raise CommandNotSupported('Can not send Bluetooth commands on a non Bluetooth server')
+				raise CommandNotSupported('Cannot send Bluetooth commands on a non Bluetooth server')
 			
 			BluetoothServer.QUEUE.put(BluetoothServer.HARDWARE_BUTTON_PRESS_AND_HOLD)
+		elif self.command == RequestHandler.LIGHTS_RGB:
+			if not config.IS_BLUETOOTH_SERVER:
+				raise CommandNotSupported('Cannot send Bluetooth commands on a non Bluetooth server')
+			
+			lights = Lights(self.postVars.get('red', 0), self.postVars.get('green', 0), self.postVars.get('blue', 0))
+			command = lights.buildString()
+			
+			if not command:
+				raise CommandNotSupported('All colors must be between 255 and 0')
+						
+			queueCommand = BluetoothServer.LIGHTS_RGB+command
+			BluetoothServer.QUEUE.put(queueCommand)
 			
 		#If we have made it this far, we don't know how to handle this command as we should just raise our exception
 		else:
